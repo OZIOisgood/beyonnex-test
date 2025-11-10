@@ -22,12 +22,13 @@ A simple CLI application that checks for anagrams and tracks input history.
 ./gradlew run
 ```
 
-Or build and run the JAR:
+## How to Test
 
 ```bash
-./gradlew build
-java -jar build/libs/beyonnex-test.jar
+./gradlew test
 ```
+
+The project includes 16 comprehensive tests covering all features and edge cases.
 
 ## Usage Example
 
@@ -49,10 +50,3 @@ Anagrams found: listen
 Enter command (1/2/q): q
 Goodbye!
 ```
-
-## Implementation Notes
-
-- Uses character frequency counting for anagram detection
-- Normalizes input by converting to lowercase and filtering non-alphanumeric characters
-- Maintains a simple in-memory history of all inputs
-- No external dependencies required
