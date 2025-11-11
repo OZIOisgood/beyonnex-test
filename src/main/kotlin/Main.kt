@@ -1,7 +1,8 @@
 package org.example
 
 class AnagramChecker {
-    private val inputHistory = mutableListOf<String>()
+    // Map: canonical form -> set of original inputs
+    private val anagramGroups = mutableMapOf<String, MutableSet<String>>()
 
     fun isAnagram(s: String, t: String): Boolean {
         if (s.length != t.length) {
@@ -20,20 +21,21 @@ class AnagramChecker {
     }
 
     fun checkAnagrams(text1: String, text2: String): Boolean {
+        addToHistory(text1)
+        addToHistory(text2)
+        
         val normalized1 = normalizeText(text1)
         val normalized2 = normalizeText(text2)
-        
-        addToHistory(normalized1)
-        addToHistory(normalized2)
         
         return isAnagram(normalized1, normalized2)
     }
 
     fun findAnagrams(input: String): List<String> {
         val normalized = normalizeText(input)
-        return inputHistory
-            .filter { it != normalized && isAnagram(normalized, it) }
-            .distinct()
+        val canonical = normalized.toCharArray().sorted().joinToString("")
+        return anagramGroups[canonical]?.filter { 
+            normalizeText(it) != normalized 
+        }?.toList() ?: emptyList()
     }
 
     private fun normalizeText(text: String): String {
@@ -41,8 +43,10 @@ class AnagramChecker {
     }
 
     private fun addToHistory(text: String) {
-        if (text.isNotEmpty()) {
-            inputHistory.add(text)
+        val normalized = normalizeText(text)
+        if (normalized.isNotEmpty()) {
+            val canonical = normalized.toCharArray().sorted().joinToString("")
+            anagramGroups.getOrPut(canonical) { mutableSetOf() }.add(text)
         }
     }
 }
