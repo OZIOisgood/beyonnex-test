@@ -32,10 +32,14 @@ class AnagramChecker {
 
     fun findAnagrams(input: String): List<String> {
         val normalized = normalizeText(input)
-        val canonical = normalized.toCharArray().sorted().joinToString("")
+        val canonical = getCanonicalForm(normalized)
         return anagramGroups[canonical]?.filter { 
             normalizeText(it) != normalized 
         }?.toList() ?: emptyList()
+    }
+
+    private fun getCanonicalForm(normalizedText: String): String {
+        return normalizedText.toCharArray().sorted().joinToString("")
     }
 
     private fun normalizeText(text: String): String {
@@ -45,7 +49,7 @@ class AnagramChecker {
     private fun addToHistory(text: String) {
         val normalized = normalizeText(text)
         if (normalized.isNotEmpty()) {
-            val canonical = normalized.toCharArray().sorted().joinToString("")
+            val canonical = getCanonicalForm(normalized)
             anagramGroups.getOrPut(canonical) { mutableSetOf() }.add(text)
         }
     }
