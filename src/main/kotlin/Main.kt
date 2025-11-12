@@ -4,7 +4,7 @@ class AnagramChecker {
     // Map: canonical form -> set of original inputs
     private val anagramGroups = mutableMapOf<String, MutableSet<String>>()
 
-    fun isAnagram(s: String, t: String): Boolean {
+    private fun isAnagram(s: String, t: String): Boolean {
         if (s.length != t.length) {
             return false
         }
