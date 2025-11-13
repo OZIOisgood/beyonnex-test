@@ -31,10 +31,11 @@ class AnagramChecker {
     }
 
     fun findAnagrams(input: String): List<String> {
+        addToHistory(input)
         val normalized = normalizeText(input)
         val canonical = getCanonicalForm(normalized)
         return anagramGroups[canonical]?.filter { 
-            normalizeText(it) != normalized 
+            it != input
         }?.toList() ?: emptyList()
     }
 
