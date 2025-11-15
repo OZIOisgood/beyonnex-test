@@ -28,7 +28,20 @@ A simple CLI application that checks for anagrams and tracks input history.
 ./gradlew test
 ```
 
-The project includes 16 comprehensive tests covering all features and edge cases.
+The project includes 13 comprehensive tests covering all features and edge cases.
+
+## Implementation Details
+
+### Performance Optimizations
+- **O(1) average lookup time** using HashMap with canonical form keys (sorted characters)
+- **Efficient storage** with Set-based deduplication
+- **Minimal comparisons** by grouping anagrams together
+
+### Design Decisions
+- **Original text preservation**: Stores and returns original input text, not normalized versions
+- **Canonical form**: Uses sorted character representation for fast anagram grouping
+- **Private API**: Implementation details like `isAnagram` are hidden from public API
+- **Both features track history**: Feature #2 also adds its input to history as specified
 
 ## Usage Example
 
@@ -45,7 +58,7 @@ Result: NO, they are not anagrams
 
 Enter command (1/2/q): 2
 Enter text: Silent
-Anagrams found: listen
+Anagrams found: Listen
 
 Enter command (1/2/q): q
 Goodbye!
